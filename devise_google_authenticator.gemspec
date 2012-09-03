@@ -19,8 +19,6 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 1.8.6'
   s.required_rubygems_version = '>= 1.3.6'
-
-  s.add_development_dependency('bundler', '~> 1.1.3')
   
   {
     'rails'  => ['>= 3.0.0', '<= 3.3.0'],
