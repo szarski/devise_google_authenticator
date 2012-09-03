@@ -11,6 +11,11 @@ begin
   require "#{DEVISE_ORM}/railtie"
 rescue LoadError
 end
+
+if DEVISE_ORM == :active_record
+  require 'active_record/connection_adapters/abstract_adapter'
+end
+
 PARENT_MODEL_CLASS = DEVISE_ORM == :active_record ? ActiveRecord::Base : Object
 
 require "devise"
