@@ -52,3 +52,4 @@ pkg
 test/rails_app/log/
 test/rails_app/db/*.sqlite3
 Gemfile.lock
+.rvmrc
