@@ -28,9 +28,12 @@ module Devise # :nodoc:
           self.gauth_tmp
         end
 
+        def token_session_expired?
+          return (self.gauth_tmp_datetime.nil? or (self.gauth_tmp_datetime < self.class.ga_timeout.ago))
+        end
+
         def validate_token(token)
-          return false if self.gauth_tmp_datetime.nil?
-          if self.gauth_tmp_datetime < self.class.ga_timeout.ago
+          if token_session_expired?
             return false
           else
 

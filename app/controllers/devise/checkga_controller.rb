@@ -16,11 +16,16 @@ class Devise::CheckgaController < Devise::SessionsController
 
     if not resource.nil?
 
-      if resource.validate_token(params[resource_name]['token'].to_i)
+      if resource.token_session_expired?
+        #(JS): user needs to recreate the tmpid and timestamp
+        set_flash_message(:error, :code_session_expired)
+        redirect_to send("new_#{resource_name}_session_path".to_sym)
+      elsif resource.validate_token(params[resource_name]['token'].to_i)
         set_flash_message(:notice, :signed_in) if is_navigational_format?
         sign_in(resource_name,resource)
         respond_with resource, :location => after_sign_in_path_for(resource)
       else
+        #(JS): user can still try to enter the code again
         set_flash_message(:error, :invalid_code)
         redirect_to send("#{resource_name}_checkga_path".to_sym, :id => params[resource_name][:tmpid])
       end
